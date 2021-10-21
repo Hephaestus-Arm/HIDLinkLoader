@@ -51,6 +51,7 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 			setVirtual(true)
 		setupPidCommands(7);
 		connect();
+		setReadTimeout(20);
 		//		if(isVirtual())
 		//			throw new RuntimeException("Device is virtual!");
 	}
@@ -58,18 +59,13 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 		//new Exception().printStackTrace();
 		myNum.setMyNum(numPID);
 		setSetpoint.waitToSendMode();
+		pidStatus.pollingMode()
 		for (PacketType pt : Arrays.asList(pidStatus,  setSetpoint)) {
 			addPollingPacket(pt);
 		}
 		
-//		addEvent(1910,{
-//			print "\n[ ";
-//			for(int i=0;i<numPID;i++){
-//				print getPidPosition(i);
-//				if(i!=numPID-1)
-//					print " , ";
-//			}
-//			print " ] ";
+//		addEvent(1848,{
+//			println "Sent packet "+setSetpoint.getDownstream()
 //		})
 	}
 
@@ -99,7 +95,8 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 			down[2 + i] = data[i];
 		}
 		writeFloats(setSetpoint.idOfCommand, down);
-		setSetpoint.pollingMode();
+		setSetpoint.oneShotMode();
+		//println "Sending packet "+down
 
 	}
 
@@ -107,10 +104,7 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 
 		double[] cur = new double[getMyNumPid()];
 		for (int i = 0; i < getMyNumPid(); i++) {
-			if (i == index)
-				cur[index] = data;
-			else
-				cur[i] = setSetpoint.getDownstream()[i+2].doubleValue()
+			cur[i] = setSetpoint.getDownstream()[i+2].doubleValue()
 		}
 		cur[index] = data;
 		setPidSetpoints(msTransition, mode, cur);
