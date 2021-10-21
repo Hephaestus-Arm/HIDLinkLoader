@@ -61,7 +61,16 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 		for (PacketType pt : Arrays.asList(pidStatus,  setSetpoint)) {
 			addPollingPacket(pt);
 		}
-
+		
+//		addEvent(1910,{
+//			print "\n[ ";
+//			for(int i=0;i<numPID;i++){
+//				print getPidPosition(i);
+//				if(i!=numPID-1)
+//					print " , ";
+//			}
+//			print " ] ";
+//		})
 	}
 
 	public double getNumPid() {
@@ -90,7 +99,7 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 			down[2 + i] = data[i];
 		}
 		writeFloats(setSetpoint.idOfCommand, down);
-		setSetpoint.oneShotMode();
+		setSetpoint.pollingMode();
 
 	}
 
@@ -140,7 +149,7 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 public class UDPRotoryLink extends AbstractRotoryLink{
 	UDP7DOf device;
 	int index =0;
-	int lastPushedVal = 0;
+	int lastPushedVal = Integer.MAX_VALUE;
 	/**
 	 * Instantiates a new HID rotory link.
 	 *
@@ -157,13 +166,15 @@ public class UDPRotoryLink extends AbstractRotoryLink{
 		if(device ==null)
 			throw new RuntimeException("Device can not be null")
 		c.addEvent(1910,{
-			int val= getCurrentPosition()*100;
+			int val= getCurrentPosition();
 			if(lastPushedVal!=val){
+				//println " Status packet: "+c.pidStatus.getUpstream()
 				//println "Fire Link Listner "+index+" value "+getCurrentPosition()
 				try {
 					fireLinkListener(getCurrentPosition());
 				}catch(Throwable t) {
-					
+					t.printStackTrace()
+//					BowlerStudio.printStackTrace(t)
 				}
 			}
 			lastPushedVal=val
