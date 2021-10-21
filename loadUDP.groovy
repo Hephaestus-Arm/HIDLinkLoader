@@ -43,6 +43,8 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 	FloatPacketType pidStatus = new FloatPacketType(1910, 64);
 
 	NumOfPID myNum = new NumOfPID();
+	String name="test"
+	
 	public UDP7DOf(def address) throws Exception {
 		super(address);
 		if(address==null)
@@ -124,6 +126,14 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 	public String toString() {
 		return getName();
 	}
+	
+	void setName(String n) {
+		name=n;
+	}
+	
+	String getName() {
+		return name;
+	}
 }
 
 
@@ -198,19 +208,22 @@ public class UDPRotoryLink extends AbstractRotoryLink{
 UDP7DOf getDevice(LinkConfiguration conf) {
 	String searchName = conf.getDeviceScriptingName();
 
-	return DeviceManager.getSpecificDevice( searchName,{
+	UDP7DOf dev= DeviceManager.getSpecificDevice( searchName,{
 		//If the device does not exist, prompt for the connection
 		def simp = null;
 		HashSet<InetAddress> addresses = UDPSimplePacketComs.getAllAddresses(searchName);
-		println addresses
+		println "loadUDP.groovy: Searched for "+searchName+" and found addresses:"+addresses
 		if (addresses.size() >= 1){
+			
 			UDP7DOf d = new UDP7DOf(addresses.toArray()[0])
 			d.setName(searchName);
-			d.connect(); // Connect to it.
+			println "Creating UDP7DOf "+d
 			return d	
 		}
 		return new UDP7DOf(null);
 	})
+	println "Device created "+dev
+	return DeviceManager.getSpecificDevice( searchName)
 }
 
 INewLinkProvider provider= new INewLinkProvider() {
