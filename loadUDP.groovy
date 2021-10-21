@@ -176,7 +176,7 @@ public class UDPRotoryLink extends AbstractRotoryLink{
 	 */
 	@Override
 	public void cacheTargetValueDevice() {
-		device.setPidSetpoint(0,0,index,(float)getTargetValue())
+		device.setPidSetpoint(0,0,index,(float)getTargetValue()*100.0)
 	}
 
 	/* (non-Javadoc)
@@ -200,7 +200,7 @@ public class UDPRotoryLink extends AbstractRotoryLink{
 	 */
 	@Override
 	public double getCurrentPosition() {
-		return device.getPidPosition(index);
+		return device.getPidPosition(index)/100.0;
 	}
 
 }
