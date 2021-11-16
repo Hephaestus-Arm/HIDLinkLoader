@@ -50,7 +50,6 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 		if(address==null)
 			setVirtual(true)
 		setupPidCommands(7);
-		connect();
 		setReadTimeout(20);
 		//		if(isVirtual())
 		//			throw new RuntimeException("Device is virtual!");
@@ -82,7 +81,7 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 	public double getPidPosition(int index) {
 		if(isVirtual()) {
 			def val=setSetpoint.getDownstream()[index+2].doubleValue()
-			//println "Virtual getPosition "+index+" "+val
+			println "Virtual getPosition "+index+" "+val
 			return val;
 		}
 		return pidStatus.getUpstream()[1 + index * 2 + 1].doubleValue();
@@ -222,10 +221,16 @@ UDP7DOf getDevice(LinkConfiguration conf) {
 			
 			UDP7DOf d = new UDP7DOf(addresses.toArray()[0])
 			d.setName(searchName);
+			d.connect();
 			println "Creating UDP7DOf "+d
 			return d	
 		}
-		return new UDP7DOf(null);
+		UDP7DOf dev  = new UDP7DOf(Inet4Address.getLocalHost());
+		dev.setVirtual(true)
+		dev.setName(searchName);
+		dev.connect();
+		dev.setVirtual(true)
+		return dev
 	})
 	println "Device created "+dev
 	return DeviceManager.getSpecificDevice( searchName)
