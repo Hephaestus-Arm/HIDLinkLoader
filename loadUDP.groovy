@@ -81,7 +81,7 @@ public class UDP7DOf  extends UDPSimplePacketComs{
 	public double getPidPosition(int index) {
 		if(isVirtual()) {
 			def val=setSetpoint.getDownstream()[index+2].doubleValue()
-			println "Virtual getPosition "+index+" "+val
+			
 			return val;
 		}
 		return pidStatus.getUpstream()[1 + index * 2 + 1].doubleValue();
@@ -162,7 +162,8 @@ public class UDPRotoryLink extends AbstractRotoryLink{
 			int val= getCurrentPosition();
 			if(lastPushedVal!=val){
 				//println " Status packet: "+c.pidStatus.getUpstream()
-				//println "Fire Link Listner "+index+" value "+getCurrentPosition()
+				if(c.isVirtual())
+					println "Virtual Link Listner "+index+" value "+getCurrentPosition()
 				try {
 					fireLinkListener(getCurrentPosition());
 				}catch(Throwable t) {
