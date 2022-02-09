@@ -437,7 +437,7 @@ RBE3001Robot getDevice(LinkConfiguration conf) {
 	String searchName = conf.getDeviceScriptingName();
 	int vid=0x3742
 	int pid=0x0007
-	if(searchName.size()>8){
+	if(searchName.size()>=8){
 		String deviceID = searchName.substring(searchName.size()-8,searchName.size())
 		String VIDStr = deviceID.substring(0,4)
 		String PIDStr = deviceID.substring(4,8)
