@@ -455,7 +455,7 @@ RBE3001Robot getDevice(LinkConfiguration conf) {
 		d.setName(searchName);
 		d.connect(); // Connect to it.
 		if(d.isVirtual()){
-			println "\n\n\nDevice is in virtual mode!\n\n\n"
+			println "\n\n\nRobot Not Found!\nDevice is in virtual mode!\n\n\n"
 		}
 		return d
 	})
