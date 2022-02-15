@@ -142,6 +142,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		lightdata[1]=sat;
 		lightdata[2]=val;
 		writeFloats(setLightPacket.idOfCommand,lightdata);
+		setLightPacket.oneShotMode();
 	}
 	public double getNumPid() {
 		return myNum.getMyNum();
