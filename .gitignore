@@ -15,3 +15,5 @@
 /.cproject
 /cache/
 /*.class
+/*.class
+/.settings/
