@@ -75,6 +75,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		SetPDVelocityConstants.waitToSendMode();
 		GetPIDVelocity.pollingMode();
 		GetPDVelocityConstants.oneShotMode();
+		setLight.oneShotMode();
 
 		getConfig.oneShotMode();
 		setConfig.waitToSendMode();
@@ -462,6 +463,7 @@ RBE3001Robot getDevice(LinkConfiguration conf) {
 		RBE3001Robot d = new RBE3001Robot(vid,pid)
 		d.setName(searchName);
 		d.connect(); // Connect to it.
+		d.setLight(0, 1, 1);
 		if(d.isVirtual()){
 			println "\n\n\nRobot Not Found!\nDevice is in virtual mode!\n\n\n"
 		}
