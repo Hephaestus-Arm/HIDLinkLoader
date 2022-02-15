@@ -137,7 +137,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		});
 	}
 
-	public void setLight(float hue, float sat, float val) {
+	public void setLight(double hue, double sat, double val) {
 		lightdata[0]=hue;
 		lightdata[1]=sat;
 		lightdata[2]=val;
