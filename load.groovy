@@ -69,16 +69,13 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		//			throw new RuntimeException("Device is virtual!");
 	}
 	void setupPidCommands(int numPID) {
-		lightdata[0]=0.0;
-		lightdata[1]=0.0;
-		lightdata[2]=1.0;
 		//new Exception().printStackTrace();
 		myNum.setMyNum(numPID);
 		SetPIDVelocity.waitToSendMode();
 		SetPDVelocityConstants.waitToSendMode();
 		GetPIDVelocity.pollingMode();
 		GetPDVelocityConstants.oneShotMode();
-		setLightPacket.oneShotMode();
+		setLightPacket.waitToSendMode();
 
 		getConfig.oneShotMode();
 		setConfig.waitToSendMode();
