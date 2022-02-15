@@ -141,7 +141,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		lightdata[0]=hue;
 		lightdata[1]=sat;
 		lightdata[2]=val;
-		writeBytes(setLight.idOfCommand,lightdata);
+		writeFloats(setLight.idOfCommand,lightdata);
 	}
 	public double getNumPid() {
 		return myNum.getMyNum();
@@ -161,7 +161,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 			value=0;
 		int intVal = value.intValue();
 		gripperData[0]=intVal;
-		writeBytes(gripper.idOfCommand, gripperData);
+		writeFloats(gripper.idOfCommand, gripperData);
 		//println "Setting gripper to "+gripperData
 		gripper.oneShotMode();
 	}
@@ -462,8 +462,7 @@ RBE3001Robot getDevice(LinkConfiguration conf) {
 	return DeviceManager.getSpecificDevice( searchName,{
 		RBE3001Robot d = new RBE3001Robot(vid,pid)
 		d.setName(searchName);
-		d.connect(); // Connect to it.
-		d.setLight(0, 1, 1);
+		d.connect(); // Connect to it
 		if(d.isVirtual()){
 			println "\n\n\nRobot Not Found!\nDevice is in virtual mode!\n\n\n"
 		}
