@@ -45,7 +45,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 	FloatPacketType pidStatus = new FloatPacketType(1910, 64);
 	FloatPacketType getConfig = new FloatPacketType(1857, 64);
 	FloatPacketType setConfig = new FloatPacketType(1900, 64);
-	FloatPacketType setLight = new FloatPacketType(2000, 64);
+	FloatPacketType setLightPacket = new FloatPacketType(2000, 64);
 	BytePacketType gripper = new BytePacketType(1962, 64);
 	PacketType SetPIDVelocity = new FloatPacketType(1811, 64);
 	PacketType SetPDVelocityConstants = new FloatPacketType(1810, 64);
@@ -75,7 +75,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		SetPDVelocityConstants.waitToSendMode();
 		GetPIDVelocity.pollingMode();
 		GetPDVelocityConstants.oneShotMode();
-		setLight.oneShotMode();
+		setLightPacket.oneShotMode();
 
 		getConfig.oneShotMode();
 		setConfig.waitToSendMode();
@@ -141,7 +141,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		lightdata[0]=hue;
 		lightdata[1]=sat;
 		lightdata[2]=val;
-		writeFloats(setLight.idOfCommand,lightdata);
+		writeFloats(setLightPacket.idOfCommand,lightdata);
 	}
 	public double getNumPid() {
 		return myNum.getMyNum();
