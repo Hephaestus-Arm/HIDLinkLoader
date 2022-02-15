@@ -59,7 +59,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 
 	double[] piddata = new double[15];
 	double[] veldata = new double[15];
-	float[] lightdata = new float[3];
+	double[] lightdata = new double[3];
 	NumberOfPID myNum = new NumberOfPID();
 	public RBE3001Robot(int vidIn, int pidIn) throws Exception {
 		super(vidIn,  pidIn);
