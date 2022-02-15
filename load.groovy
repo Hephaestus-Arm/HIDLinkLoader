@@ -82,7 +82,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		setSetpoint.waitToSendMode();
 		gripper.waitToSendMode();
 		for (PacketType pt : Arrays.asList(pidStatus, getConfig, setConfig, setSetpoint, SetPIDVelocity,
-		SetPDVelocityConstants, GetPIDVelocity, GetPDVelocityConstants,gripper)) {
+		SetPDVelocityConstants, GetPIDVelocity, GetPDVelocityConstants,gripper, setLightPacket)) {
 			addPollingPacket(pt);
 		}
 
