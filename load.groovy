@@ -45,6 +45,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 	FloatPacketType pidStatus = new FloatPacketType(1910, 64);
 	FloatPacketType getConfig = new FloatPacketType(1857, 64);
 	FloatPacketType setConfig = new FloatPacketType(1900, 64);
+	FloatPacketType setLightPacket = new FloatPacketType(2000, 64);
 	BytePacketType gripper = new BytePacketType(1962, 64);
 	PacketType SetPIDVelocity = new FloatPacketType(1811, 64);
 	PacketType SetPDVelocityConstants = new FloatPacketType(1810, 64);
@@ -58,6 +59,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 
 	double[] piddata = new double[15];
 	double[] veldata = new double[15];
+	double[] lightdata = new double[3];
 	NumberOfPID myNum = new NumberOfPID();
 	public RBE3001Robot(int vidIn, int pidIn) throws Exception {
 		super(vidIn,  pidIn);
@@ -73,13 +75,14 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		SetPDVelocityConstants.waitToSendMode();
 		GetPIDVelocity.pollingMode();
 		GetPDVelocityConstants.oneShotMode();
+		setLightPacket.waitToSendMode();
 
 		getConfig.oneShotMode();
 		setConfig.waitToSendMode();
 		setSetpoint.waitToSendMode();
 		gripper.waitToSendMode();
 		for (PacketType pt : Arrays.asList(pidStatus, getConfig, setConfig, setSetpoint, SetPIDVelocity,
-		SetPDVelocityConstants, GetPIDVelocity, GetPDVelocityConstants,gripper)) {
+		SetPDVelocityConstants, GetPIDVelocity, GetPDVelocityConstants,gripper, setLightPacket)) {
 			addPollingPacket(pt);
 		}
 
@@ -134,6 +137,13 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 		});
 	}
 
+	public void setLight(double hue, double sat, double val) {
+		lightdata[0]=hue;
+		lightdata[1]=sat;
+		lightdata[2]=val;
+		writeFloats(setLightPacket.idOfCommand,lightdata);
+		setLightPacket.oneShotMode();
+	}
 	public double getNumPid() {
 		return myNum.getMyNum();
 	}
@@ -152,7 +162,7 @@ public class RBE3001Robot  extends HIDSimplePacketComs{
 			value=0;
 		int intVal = value.intValue();
 		gripperData[0]=intVal;
-		writeBytes(gripper.idOfCommand, gripperData);
+		writeByteswriteFloats(gripper.idOfCommand, gripperData);
 		//println "Setting gripper to "+gripperData
 		gripper.oneShotMode();
 	}
@@ -453,7 +463,7 @@ RBE3001Robot getDevice(LinkConfiguration conf) {
 	return DeviceManager.getSpecificDevice( searchName,{
 		RBE3001Robot d = new RBE3001Robot(vid,pid)
 		d.setName(searchName);
-		d.connect(); // Connect to it.
+		d.connect(); // Connect to it
 		if(d.isVirtual()){
 			println "\n\n\nRobot Not Found!\nDevice is in virtual mode!\n\n\n"
 		}
