@@ -161,8 +161,8 @@ public class UDPRotoryLink extends AbstractRotoryLink{
 			int val= getCurrentPosition();
 			if(lastPushedVal!=val){
 				//println " Status packet: "+c.pidStatus.getUpstream()
-				if(c.isVirtual())
-					println "Virtual Link Listner "+index+" value "+getCurrentPosition()
+				//if(c.isVirtual())
+				//	println "Virtual Link Listner "+index+" value "+getCurrentPosition()
 				try {
 					fireLinkListener(getCurrentPosition());
 				}catch(Throwable t) {
