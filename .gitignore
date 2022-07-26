@@ -17,3 +17,10 @@
 /*.class
 /*.class
 /.settings/
+
+/.settings
+/.project
+/.classpath
+/.cproject
+/cache/
+/*.class
