@@ -6,6 +6,7 @@ import Jama.Matrix;
 import edu.wpi.SimplePacketComs.*;
 import edu.wpi.SimplePacketComs.phy.*;
 
+import com.neuronrobotics.bowlerstudio.scripting.PasswordManager
 import com.neuronrobotics.sdk.addons.kinematics.AbstractLink
 import com.neuronrobotics.sdk.addons.kinematics.AbstractRotoryLink
 import com.neuronrobotics.sdk.addons.kinematics.INewLinkProvider
@@ -215,7 +216,12 @@ UDP7DOf getDevice(LinkConfiguration conf) {
 	UDP7DOf dev= DeviceManager.getSpecificDevice( searchName,{
 		//If the device does not exist, prompt for the connection
 		def simp = null;
-		HashSet<InetAddress> addresses = UDPSimplePacketComs.getAllAddresses(searchName);
+		HashSet<InetAddress> addresses=new HashSet<>();
+		try {
+			addresses = UDPSimplePacketComs.getAllAddresses(searchName);
+		}catch(Throwable t) {
+			t.printStackTrace();
+		}
 		println "loadUDP.groovy: Searched for "+searchName+" and found addresses:"+addresses
 		if (addresses.size() >= 1){
 			
