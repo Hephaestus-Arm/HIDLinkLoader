@@ -219,8 +219,10 @@ UDP7DOf getDevice(LinkConfiguration conf) {
 		HashSet<InetAddress> addresses=new HashSet<>();
 		try {
 			addresses = UDPSimplePacketComs.getAllAddresses(searchName);
+		}catch(java.io.IOException ex) {
+			println "loadUDP.groovy can not access a network"
 		}catch(Throwable t) {
-			t.printStackTrace();
+			println "Error in loadUDP.groovy "+t.getLocalizedMessage()
 		}
 		println "loadUDP.groovy: Searched for "+searchName+" and found addresses:"+addresses
 		if (addresses.size() >= 1){
