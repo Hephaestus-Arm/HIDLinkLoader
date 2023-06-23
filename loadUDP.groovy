@@ -13,14 +13,12 @@ import com.neuronrobotics.sdk.common.DeviceManager
 
 import edu.wpi.SimplePacketComs.BytePacketType;
 import edu.wpi.SimplePacketComs.FloatPacketType;
-import edu.wpi.SimplePacketComs.*;
 import edu.wpi.SimplePacketComs.phy.UDPSimplePacketComs;
 import edu.wpi.SimplePacketComs.device.gameController.*;
 import edu.wpi.SimplePacketComs.device.*
 
 import java.util.Arrays;
 
-import edu.wpi.SimplePacketComs.FloatPacketType;
 import edu.wpi.SimplePacketComs.PacketType;
 public class NumOfPID {
 	private int myNum = -1;
